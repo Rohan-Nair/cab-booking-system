@@ -5,12 +5,10 @@ import mysql.connector
 
 
 # connecting the database
-db = mysql.connector.connect(host="loclhost", user="root", password="1234")
+db = mysql.connector.connect(host="localhost", user="root", password="1234")
 db_cursor = db.cursor()
-createtable_query = (
-    "CREATE TABLE IF NOT EXISTS (USERNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL)"
-)
-db_cursor.execute(createtable_query)
+newtablequery = "CREATE TABLE IF NOT EXISTS USER (USERNAME VARCHAR(20) NOT NULL, PASSWORD VARCHAR(10) NOT NULL)"
+db_cursor.execute(newtablequery)
 db.commit()  # saving the changes
 db.close()  # closing the connection
 
@@ -27,7 +25,7 @@ class user:
         self.new_password = StringVar()
 
     def login(self):
-        db = mysql.connector.connect(host="loclhost", user="root", password="1234")
+        db = mysql.connector.connect(host="localhost", user="root", password="1234")
         db_cursor = db.cursor()
 
         query = "SELECT * FROM user WHERE USERNAME = ? AND PASSWORD = ?"
@@ -43,7 +41,7 @@ class user:
             msg.showerror("Error", "Login Unsuccessful")
 
     def new_user(self):
-        db = mysql.connector.connect(host="loclhost", user="root", password="1234")
+        db = mysql.connector.connect(host="localhost", user="root", password="1234")
         db_cursor = db.cursor()
 
         findusername_query = "SELECT * FROM user WHERE USERNAME = ?"
@@ -60,6 +58,10 @@ class user:
         db_cursor.execute(addnewuser_query, [self.username.get(), self.password.get()])
         db.commit()
         db.close()
+
+    def available_routes(self):
+        # create function to show avilable routes
+        return
 
 
 class travel:
