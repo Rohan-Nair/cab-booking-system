@@ -23,6 +23,8 @@ class user:
         self.password = StringVar()
         self.new_username = StringVar()
         self.new_password = StringVar()
+        # widgets
+        self.widgets()
 
     def login(self):
         db = mysql.connector.connect(host="localhost", user="root", password="1234")
@@ -44,24 +46,64 @@ class user:
         db = mysql.connector.connect(host="localhost", user="root", password="1234")
         db_cursor = db.cursor()
 
+        # check if the username entered by the user already exists in the database in that case show and error
         findusername_query = "SELECT * FROM user WHERE USERNAME = ?"
-        db_cursor.execute(findusername_query, [self.username.get()])
+        askusername = self.username.get()
+        db_cursor.execute(findusername_query, [askusername])
         if db_cursor.fetchall():
             # checking if the username already exists in the table
             msg.showerror("Error", "Username already taken!!")
+        
+        # if the username doesnt already exist show that the account has been created and go to the login page 
         else:
+            # adding the new user to the database
+            addnewuser_query = "INSERT INTO USER(USERNAME, PASSWORD) VALUES(?,?)"
+            db_cursor.execute(addnewuser_query, [askusername, self.password.get()])
+            db.commit()
+            db.close()
+            # user added 
             msg.showinfo("Complete!", "Account Created!!")
-            self.login()
+            # go to login 
+            self.login() 
 
-        # adding the new username to the database
-        addnewuser_query = "INSERT INTO USER(USERNAME, PASSWORD) VALUES(?,?)"
-        db_cursor.execute(addnewuser_query, [self.username.get(), self.password.get()])
-        db.commit()
-        db.close()
+        
 
     def available_routes(self):
-        # create function to show avilable routes
+        # create a new window 
+        newroot = Tk()
+        newroot.geometry("300x300")
+        newroot.title("Routes")
+        # list all the available routes
+        Label(newroot, text="LPU Main Gate --> Block 27 (Computing Block)", font=("Lato", 15), fg="red", bg="black").pack()
+        Label(newroot, text="LPU Main Gate --> Unipolis", font=("Lato", 15), fg="red", bg="black").pack()
+        Label(newroot, text="LPU Main Gate --> Unihospital", font=("Lato", 15), fg="red", bg="black").pack()
+        Label(newroot, text="LPU Main Gate --> Block 34", font=("Lato", 15), fg="red", bg="black").pack()
+        Label(newroot, text="LPU Main Gate --> BH1", font=("Lato", 15), fg="red", bg="black").pack()
+        Label(newroot, text="LPU Main Gate --> BH1", font=("Lato", 15), fg="red", bg="black").pack()
+        Label(newroot, text="LPU Main Gate --> BH3", font=("Lato", 15), fg="red", bg="black").pack()
+        Label(newroot, text="LPU Main Gate --> BH6", font=("Lato", 15), fg="red", bg="black").pack()
+        # button to close the window and go back to the main page
+        Button(newroot, text="Close", command=newroot.destroy, font=("Lato", 10), fg="red", bg="black").pack()
+        newroot.mainloop()
         return
+
+    def widgets(self): 
+        # heading 
+        self.head = Label(self.main, text="Welcome to Cab Booking System", font=("Lato", 14), bg="grey")
+        self.head.pack(pady=10)
+
+        # login button option 
+        self.optionsframe = Frame(self.main)
+        option1login = Button(self.optionsframe, text="Login", command=self.login, font=("Lato", 12), bg="black", fg="red")
+        option1login.pack(padx=10, pady=10)
+
+        # register new user option 
+        option2newuser = Button(self.optionsframe, text="New User", command=self.new_user, font=("Lato", 12), bg="black", fg="red")
+        option2newuser.pack(padx=10, pady=10)
+
+        # show all available routes option 
+        option3routes = Button(self.optionsframe, text="View Routes", command=self.available_routes, font=("Lato", 12), bg="black", fg="red")
+        option3routes.pack(padx=10,pady=10)
 
 
 class travel:
