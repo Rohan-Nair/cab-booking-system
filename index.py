@@ -63,10 +63,10 @@ class user:
             text="LOGIN",
             font=("Lato", 15), 
             pady=2,
-            fg="red", 
+            fg="light blue", 
             bg="black",
             width=32
-        ).grid(row=0, column=0, columnspan=2)
+        ).grid(row=0, column=0, columnspan=2, pady=10)
 
         # username label and entry space
         Label(
@@ -74,7 +74,7 @@ class user:
             text="Username: ", 
             font=("Lato", 12),
             pady=2,
-            fg="red",
+            fg="light blue",
             bg="black"
         ).grid(row=1, column=0, pady=37)
         usernameentry = Entry(newroot, width=30, font=("Lato", 13), background="light blue")
@@ -88,7 +88,7 @@ class user:
             text="Password: ",
             font=("Lato", 12),
             pady=2,
-            fg="red",
+            fg="light blue",
             bg="black"
         ).grid(row=2, column=0,pady=10)
         passwordentry = Entry(newroot, width=30, font=("Lato", 13),background="light blue")
@@ -103,7 +103,7 @@ class user:
             font=("Lato", 13),
             padx=5, 
             pady=2,
-            fg="red", 
+            fg="light blue", 
             bg="black",
             command=clicklogin
         ).grid(row=3, column=0, columnspan=2, pady=20)
@@ -139,84 +139,93 @@ class user:
         # create a new window
         newroot = Tk()
         newroot.title("Routes")
-        newroot.geometry("550x300")
+        newroot.geometry("520x560")
         # list all the available routes
         newroot.config(bg="black")
+        Label(
+            newroot,
+            text="AVAILABLE ROUTES",
+            font=("Lato 18 underline"), 
+            pady=2, 
+            fg="light blue",
+            bg="black"
+        ).pack(pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> Block 27 (Computing Block)",
             font=("Lato", 15),
             pady=2,
-            fg="red",
+            fg="light blue",
             bg="black",
-        ).pack()
+        ).pack(pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> Unipolis",
             font=("Lato", 15),
             pady=2,
-            fg="red",
+            fg="light blue",
             bg="black",
-        ).pack()
+        ).pack(pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> Unihospital",
             font=("Lato", 15),
             pady=2,
-            fg="red",
+            fg="light blue",
             bg="black",
-        ).pack()
+        ).pack(pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> Block 34",
             font=("Lato", 15),
             pady=2,
-            fg="red",
+            fg="light blue",
             bg="black",
-        ).pack()
+        ).pack(pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> BH1",
             font=("Lato", 15),
             pady=2,
-            fg="red",
+            fg="light blue",
             bg="black",
-        ).pack()
+        ).pack(pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> BH1",
             font=("Lato", 15),
             pady=2,
-            fg="red",
+            fg="light blue",
             bg="black",
-        ).pack()
+        ).pack(pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> BH3",
             font=("Lato", 15),
             pady=2,
-            fg="red",
+            fg="light blue",
             bg="black",
-        ).pack()
+        ).pack(pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> BH6",
             font=("Lato", 15),
             pady=2,
-            fg="red",
+            fg="light blue",
             bg="black",
-        ).pack()
+        ).pack(pady=10)
         # button to close the window and go back to the main page
         Button(
             newroot,
             text="Close",
             command=newroot.destroy,
             font=("Lato", 15),
-            fg="red",
+            fg="light blue",
             bg="black",
-        ).pack()
+            activeforeground="light blue",
+            activebackground="black"
+        ).pack(pady=10)
         newroot.mainloop()
-
         return
 
     def widgets(self):
