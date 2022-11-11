@@ -1,5 +1,4 @@
 from tkinter import *
-from tkinter.ttk import *
 from tkinter import messagebox as msg
 import mysql.connector
 
@@ -19,28 +18,98 @@ class user:
         # window
         self.main = main
         # variables
-        self.username = StringVar()
-        self.password = StringVar()
+        # self.username = StringVar()
+        # self.password = StringVar()
         self.new_username = StringVar()
         self.new_password = StringVar()
         # widgets
         self.widgets()
 
+
     def login(self):
-        db = mysql.connector.connect(host="localhost", user="root", password="1234")
-        db_cursor = db.cursor()
+        root.forget()
+        newroot = Tk()
+        newroot.geometry("700x550")
+        newroot.config(bg="black")
+        # on clicking the login button
+        def clicklogin():
+            db = mysql.connector.connect(host="localhost", user="root", password="1234")
+            db_cursor = db.cursor()
 
-        query = "SELECT * FROM user WHERE USERNAME = ? AND PASSWORD = ?"
-        db_cursor.execute(query, [self.username.get(), self.password.get()])
-        result = db_cursor.fetchone()
+            query = "SELECT * FROM user WHERE USERNAME = ? AND PASSWORD = ?"
+            username = usernameentry.get(),
+            password = passwordentry.get()
+            db_cursor.execute(query, [username, password])
+            result = db_cursor.fetchone()
 
-        if result:
-            msg.showinfo("Welcome", "Login Successful Welcome to Cab Booking System")
-            # login successful and go to the next window to book the cab
-            application = travel(root)
-        else:
-            # login unsuccessful
-            msg.showerror("Error", "Login Unsuccessful")
+            if result:
+                msg.showinfo("Welcome", "Login Successful Welcome to Cab Booking System")
+                # login successful and go to the next window to book the cab
+                application = travel(root)
+            else:
+                # login unsuccessful
+                msg.showerror("Error", "Login Unsuccessful")
+        
+        # to clear text on clicking 
+        def cleartextonclick1(e): # for username
+            usernameentry.delete(0, "end")
+        
+        def cleartextonclick2(e): # for password   
+            passwordentry.delete(0,"end")
+
+        # login page heading 
+        Label(
+            newroot,
+            text="LOGIN",
+            font=("Lato", 15), 
+            pady=2,
+            fg="red", 
+            bg="black",
+            width=32
+        ).grid(row=0, column=0, columnspan=2)
+
+        # username label and entry space
+        Label(
+            newroot,
+            text="Username: ", 
+            font=("Lato", 12),
+            pady=2,
+            fg="red",
+            bg="black"
+        ).grid(row=1, column=0, pady=37)
+        usernameentry = Entry(newroot, width=30, font=("Lato", 13), background="light blue")
+        usernameentry.insert(0, "enter your username...")
+        usernameentry.bind("<FocusIn>", cleartextonclick1) # to delete the existing text when the username entry space is clicked
+        usernameentry.grid(row=1,column=1, pady=37)
+
+        # password space
+        Label(
+            newroot,
+            text="Password: ",
+            font=("Lato", 12),
+            pady=2,
+            fg="red",
+            bg="black"
+        ).grid(row=2, column=0,pady=10)
+        passwordentry = Entry(newroot, width=30, font=("Lato", 13),background="light blue")
+        passwordentry.insert(0, "Enter your password...")
+        passwordentry.bind("<FocusIn>", cleartextonclick2) #to delete the existing text when the password entry space is clicked
+        passwordentry.grid(row=2, column=1, pady=10)
+
+        # login button 
+        Button(
+            newroot,
+            text="Login", 
+            font=("Lato", 13),
+            padx=5, 
+            pady=2,
+            fg="red", 
+            bg="black",
+            command=clicklogin
+        ).grid(row=3, column=0, columnspan=2, pady=20)
+
+        newroot.mainloop()
+
 
     def new_user(self):
         db = mysql.connector.connect(host="localhost", user="root", password="1234")
