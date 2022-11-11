@@ -136,6 +136,7 @@ class user:
             self.login()
 
     def available_routes(self):
+        root.forget()
         # create a new window
         newroot = Tk()
         newroot.title("Routes")
