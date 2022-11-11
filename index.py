@@ -12,8 +12,6 @@ db_cursor.execute(newtablequery)
 db.commit()  # saving the changes
 db.close()  # closing the connection
 
-# this is tmp comment
-
 
 class user:
     # creating the variables
@@ -157,8 +155,8 @@ class user:
         self.head = Label(
             self.main,
             text="Welcome to Cab Booking System",
-            font=("Lato", 14),
-            bg="grey",
+            font=("Lato", 20),
+            bg="light blue",
         )
         self.head.pack(pady=10)
 
@@ -168,9 +166,10 @@ class user:
             self.optionsframe,
             text="Login",
             command=self.login,
-            font=("Lato", 12),
-            bg="black",
-            fg="red",
+            font=("Lato", 15),
+            bg="light blue",
+            fg="black",
+            activebackground="light blue",
         )
         option1login.pack(padx=10, pady=10)
 
@@ -179,9 +178,10 @@ class user:
             self.optionsframe,
             text="New User",
             command=self.new_user,
-            font=("Lato", 12),
-            bg="black",
-            fg="red",
+            font=("Lato", 15),
+            bg="light blue",
+            fg="black",
+            activebackground="light blue",
         )
         option2newuser.pack(padx=10, pady=10)
 
@@ -190,11 +190,14 @@ class user:
             self.optionsframe,
             text="View Routes",
             command=self.available_routes,
-            font=("Lato", 12),
-            bg="black",
-            fg="red",
+            font=("Lato", 15),
+            bg="light blue",
+            fg="black",
+            activebackground="light blue",
         )
         option3routes.pack(padx=10, pady=10)
+        self.optionsframe.config(bg="black")
+        self.optionsframe.pack()
 
 
 class travel:
@@ -207,6 +210,7 @@ if __name__ == "__main__":
     root = Tk()
     root.geometry("600x300")
     root.title("Cab Booking System Login")
+    root.config(bg="black")
 
     application = user(root)
     root.mainloop()
