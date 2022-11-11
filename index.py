@@ -69,13 +69,15 @@ class user:
     def available_routes(self):
         # create a new window
         newroot = Tk()
-        newroot.geometry("300x300")
         newroot.title("Routes")
+        newroot.geometry("550x300")
         # list all the available routes
+        newroot.config(bg="black")
         Label(
             newroot,
             text="LPU Main Gate <--> Block 27 (Computing Block)",
             font=("Lato", 15),
+            pady=2,
             fg="red",
             bg="black",
         ).pack()
@@ -83,6 +85,7 @@ class user:
             newroot,
             text="LPU Main Gate <--> Unipolis",
             font=("Lato", 15),
+            pady=2,
             fg="red",
             bg="black",
         ).pack()
@@ -90,6 +93,7 @@ class user:
             newroot,
             text="LPU Main Gate <--> Unihospital",
             font=("Lato", 15),
+            pady=2,
             fg="red",
             bg="black",
         ).pack()
@@ -97,6 +101,7 @@ class user:
             newroot,
             text="LPU Main Gate <--> Block 34",
             font=("Lato", 15),
+            pady=2,
             fg="red",
             bg="black",
         ).pack()
@@ -104,6 +109,7 @@ class user:
             newroot,
             text="LPU Main Gate <--> BH1",
             font=("Lato", 15),
+            pady=2,
             fg="red",
             bg="black",
         ).pack()
@@ -111,6 +117,7 @@ class user:
             newroot,
             text="LPU Main Gate <--> BH1",
             font=("Lato", 15),
+            pady=2,
             fg="red",
             bg="black",
         ).pack()
@@ -118,6 +125,7 @@ class user:
             newroot,
             text="LPU Main Gate <--> BH3",
             font=("Lato", 15),
+            pady=2,
             fg="red",
             bg="black",
         ).pack()
@@ -125,6 +133,7 @@ class user:
             newroot,
             text="LPU Main Gate <--> BH6",
             font=("Lato", 15),
+            pady=2,
             fg="red",
             bg="black",
         ).pack()
@@ -133,11 +142,12 @@ class user:
             newroot,
             text="Close",
             command=newroot.destroy,
-            font=("Lato", 10),
+            font=("Lato", 15),
             fg="red",
             bg="black",
         ).pack()
         newroot.mainloop()
+
         return
 
     def widgets(self):
