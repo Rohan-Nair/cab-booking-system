@@ -12,6 +12,8 @@ db_cursor.execute(newtablequery)
 db.commit()  # saving the changes
 db.close()  # closing the connection
 
+# this is tmp comment
+
 
 class user:
     # creating the variables
