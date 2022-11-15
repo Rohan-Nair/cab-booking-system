@@ -4,7 +4,7 @@ import mysql.connector
 
 
 # connecting the database
-db = mysql.connector.connect(host="localhost", user="root", password="1234")
+db = mysql.connector.connect(host="localhost", user="root", password="1234", database="CABMS")
 db_cursor = db.cursor()
 newtablequery = "CREATE TABLE IF NOT EXISTS USER (USERNAME VARCHAR(20) NOT NULL, PASSWORD VARCHAR(10) NOT NULL)"
 db_cursor.execute(newtablequery)
@@ -27,31 +27,65 @@ class user:
 
 
     def login(self):
-        root.forget()
         newroot = Tk()
-        newroot.geometry("700x550")
+        newroot.geometry("400x340")
         newroot.config(bg="black")
+        newroot.title("Login")
         # on clicking the login button
+        # --------------------------------------------
+        # def clicklogin():
+        #     username=StringVar()
+        #     password=StringVar()
+        #     db = mysql.connector.connect(host="localhost", user="root", password="1234")
+        #     db_cursor = db.cursor()
+
+        #     query = "SELECT * FROM user WHERE USERNAME = ? AND PASSWORD = ?"
+        #     print(usernameentry.get())
+        #     print(passwordentry.get())
+        #     db_cursor.execute(query, [usernameentry.get(), passwordentry.get()])
+        #     result = db_cursor.fetchall()
+
+        #     if result is not None:
+        #         msg.showinfo("Welcome", "Login Successful Welcome to Cab Booking System")
+        #         # login successful and go to the next window to book the cab
+        #         application = travel(root)
+        #     else:
+        #         # login unsuccessful
+        #         msg.showerror("Error", "Login Unsuccessful")
+        # --------------------------------------------
+
         def clicklogin():
-            username=StringVar()
-            password=StringVar()
-            db = mysql.connector.connect(host="localhost", user="root", password="1234")
-            db_cursor = db.cursor()
+            #init
+            username = StringVar()
+            passwrd = StringVar()
+            #getting
+            username = usernameentry.get()
+            passwrd = passwordentry.get()
 
-            query = "SELECT * FROM user WHERE USERNAME = ? AND PASSWORD = ?"
-            username = usernameentry.get(),
-            password = passwordentry.get()
-            db_cursor.execute(query, [username, password])
-            result = db_cursor.fetchone()
+            if username=="" or passwrd=="":
+                msg.showerror("Error", "Enter username and password")
 
-            if result:
-                msg.showinfo("Welcome", "Login Successful Welcome to Cab Booking System")
-                # login successful and go to the next window to book the cab
-                application = travel(root)
-            else:
-                # login unsuccessful
-                msg.showerror("Error", "Login Unsuccessful")
-        
+            # connecting to the database
+            else: 
+                print("here")
+                
+                db = mysql.connector.connect(host="localhost", user="root", password="1234", database="CABMS")
+                db_cursor = db.cursor()
+                db_cursor.execute("SELECT * FROM USER WHERE USERNAME = %s AND PASSWORD = %s", (username, passwrd))
+                result = db_cursor.fetchone()
+                
+                if result == None:
+                    msg.showerror("Error", "Invalid username or password")
+                else: 
+                    msg.showinfo("Success", "Login complete!")
+                    newroot.destroy()
+                    application = travel(root)
+                    # root shouldnt be destroyed else cant pass to travel class 
+
+        # go back to main 
+        def gobacktomain():
+            newroot.destroy()      
+            return  
         # to clear text on clicking 
         def cleartextonclick1(e): # for username
             usernameentry.delete(0, "end")
@@ -109,6 +143,17 @@ class user:
             bg="black",
             command=clicklogin
         ).grid(row=3, column=0, columnspan=2, pady=20)
+
+        Button(
+            newroot, 
+            text="Back", 
+            font=("Lato", 10),
+            padx=5,
+            pady=2,
+            fg="light blue", 
+            bg="black", 
+            command=gobacktomain
+        ).grid(row=4, column=1, pady=10, sticky="e")
 
         newroot.mainloop()
 
@@ -201,7 +246,7 @@ class user:
         gender=StringVar()
         gender.set("--Select--")
         genderdrop = OptionMenu(newroot, gender, "Male", "Female", "Other")
-        genderdrop.config(fg="light blue", bg="black", font=("Lato", 13), activebackground="black", activeforeground="light blue")
+        genderdrop.config(fg="light blue", bg="black", font=("Lato", 13))
         genderdrop.grid(row=3, column=1, pady=10, sticky="w", padx=5)
 
         # mobile number 
@@ -246,7 +291,7 @@ class user:
 
 
     def available_routes(self):
-        root.forget()
+        # root.forget()
         # create a new window
         newroot = Tk()
         newroot.title("Routes")
@@ -393,6 +438,11 @@ class travel:
     def __init__(self, main):
         self.main = main
         # variables
+        self.testreach() #function to test if the program has reached here 
+    
+    def testreach():
+        print("reached")
+        return 
 
 
 if __name__ == "__main__":
