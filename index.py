@@ -6,7 +6,7 @@ import mysql.connector
 # connecting the database
 db = mysql.connector.connect(host="localhost", user="root", password="1234", database="CABMS")
 db_cursor = db.cursor()
-newtablequery = "CREATE TABLE IF NOT EXISTS USER (USERNAME VARCHAR(20) NOT NULL, PASSWORD VARCHAR(10) NOT NULL)"
+newtablequery = "CREATE TABLE IF NOT EXISTS USER (UID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, USERNAME VARCHAR(20) NOT NULL, PASSWORD VARCHAR(10) NOT NULL)"
 db_cursor.execute(newtablequery)
 db.commit()  # saving the changes
 db.close()  # closing the connection
@@ -67,8 +67,6 @@ class user:
 
             # connecting to the database
             else: 
-                print("here")
-                
                 db = mysql.connector.connect(host="localhost", user="root", password="1234", database="CABMS")
                 db_cursor = db.cursor()
                 db_cursor.execute("SELECT * FROM USER WHERE USERNAME = %s AND PASSWORD = %s", (username, passwrd))
@@ -181,18 +179,39 @@ class user:
         #     msg.showinfo("Complete!", "Account Created!!")
         #     # go to login
         #     user(root)
+
+        def clicksubmit():
+            #init
+            newusername = StringVar()
+            newpwd = StringVar()
+            # getting
+            newusername = usernameentry.get()
+            newpwd = passwordentry.get()
+
+            if newusername=="" or newpwd=="":
+                msg.showerror("Error", "Enter username and password")
+            else:
+                db = mysql.connector.connect(host="localhost", user="root", password="1234", database="CABMS")
+                db_cursor = db.cursor()
+                db_cursor.execute("INSERT INTO USER(USERNAME, PASSWORD) VALUES(%s, %s)", (newusername, newpwd))
+                db.commit()
+                msg.showinfo("Success", "Successfully Registered! You can now login")
+                newroot.destroy()
+            return       
+
+
         newroot = Tk()
         newroot.title("Register User")
         # root.forget()
         newroot.config(bg="black")
 
-        def clearonclick1(): #to clear existing text in username section
+        def clearonclick1(e): #to clear existing text in username section
             usernameentry.delete(0, "end")
-        def clearonclick2(): #to clear existing text in password section
+        def clearonclick2(e): #to clear existing text in password section
             passwordentry.delete(0, "end")
-        def clearonclick3(): #to clear existing text in mobile number section
+        def clearonclick3(e): #to clear existing text in mobile number section
             mobileentry.delete(0,"end")
-        def clearonclick4(): #to clear existing text in email section
+        def clearonclick4(e): #to clear existing text in email section
             emailentry.delete(0,"end")
 
         # new user heading 
@@ -235,19 +254,21 @@ class user:
         passwordentry.grid(row=2, column=1, pady=10, padx=2)
 
         # gender drop down 
-        Label(
-            newroot,
-            text="Gender: ",
-            font=("Lato", 15),
-            pady=2,
-            fg="light blue", 
-            bg="black", 
-        ).grid(row=3, column=0, sticky="w", padx=2)
-        gender=StringVar()
-        gender.set("--Select--")
-        genderdrop = OptionMenu(newroot, gender, "Male", "Female", "Other")
-        genderdrop.config(fg="light blue", bg="black", font=("Lato", 13))
-        genderdrop.grid(row=3, column=1, pady=10, sticky="w", padx=5)
+        # Label(
+        #     newroot,
+        #     text="Gender: ",
+        #     font=("Lato", 15),
+        #     pady=2,
+        #     fg="light blue", 
+        #     bg="black", 
+        #     activeforeground="light blue",
+        #     activebackground="black", 
+        # ).grid(row=3, column=0, sticky="w", padx=2)
+        # gender=StringVar()
+        # gender.set("--Select--")
+        # genderdrop = OptionMenu(newroot, gender, "Male", "Female", "Other")
+        # genderdrop.config(fg="light blue", bg="black", font=("Lato", 13))
+        # genderdrop.grid(row=3, column=1, pady=10, sticky="w", padx=5)
 
         # mobile number 
         Label(
@@ -285,6 +306,7 @@ class user:
             pady=2, 
             fg="light blue", 
             bg="black", 
+            command=clicksubmit
         ).grid(row=6, column=0, columnspan=2, pady=10)
 
         newroot.mainloop()
