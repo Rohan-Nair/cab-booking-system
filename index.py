@@ -317,7 +317,7 @@ class user:
         # create a new window
         newroot = Tk()
         newroot.title("Routes")
-        newroot.geometry("520x560")
+        newroot.geometry("520x500")
         # list all the available routes
         newroot.config(bg="black")
         Label(
@@ -327,7 +327,7 @@ class user:
             pady=2, 
             fg="light blue",
             bg="black"
-        ).pack(pady=10)
+        ).grid(row=0, column=0,pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> Block 27 (Computing Block)",
@@ -335,7 +335,7 @@ class user:
             pady=2,
             fg="light blue",
             bg="black",
-        ).pack(pady=10)
+        ).grid(row=1, column=0,pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> Unipolis",
@@ -343,7 +343,7 @@ class user:
             pady=2,
             fg="light blue",
             bg="black",
-        ).pack(pady=10)
+        ).grid(row=2, column=0,pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> Unihospital",
@@ -351,23 +351,15 @@ class user:
             pady=2,
             fg="light blue",
             bg="black",
-        ).pack(pady=10)
+        ).grid(row=3, column=0,pady=10)
         Label(
             newroot,
-            text="LPU Main Gate <--> Block 34",
+            text="LPU Main Gate <--> Admission Block",
             font=("Lato", 15),
             pady=2,
             fg="light blue",
             bg="black",
-        ).pack(pady=10)
-        Label(
-            newroot,
-            text="LPU Main Gate <--> BH1",
-            font=("Lato", 15),
-            pady=2,
-            fg="light blue",
-            bg="black",
-        ).pack(pady=10)
+        ).grid(row=4, column=0,pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> BH1",
@@ -375,7 +367,7 @@ class user:
             pady=2,
             fg="light blue",
             bg="black",
-        ).pack(pady=10)
+        ).grid(row=5, column=0,pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> BH3",
@@ -383,7 +375,7 @@ class user:
             pady=2,
             fg="light blue",
             bg="black",
-        ).pack(pady=10)
+        ).grid(row=6, column=0,pady=10)
         Label(
             newroot,
             text="LPU Main Gate <--> BH6",
@@ -391,7 +383,7 @@ class user:
             pady=2,
             fg="light blue",
             bg="black",
-        ).pack(pady=10)
+        ).grid(row=7, column=0,pady=10)
         # button to close the window and go back to the main page
         Button(
             newroot,
@@ -402,22 +394,22 @@ class user:
             bg="black",
             activeforeground="light blue",
             activebackground="black"
-        ).pack(pady=10)
+        ).grid(row=8, column=0,pady=10)
         newroot.mainloop()
         return
 
     def widgets(self):
         # heading
+        self.optionsframe = Frame(self.main, padx=5)
         self.head = Label(
-            self.main,
+            self.optionsframe,
             text="Welcome to Cab Booking System",
             font=("Lato", 20),
             bg="light blue",
         )
-        self.head.pack(pady=10)
+        self.head.grid(row= 0, column=0, pady=10)
 
         # login button option
-        self.optionsframe = Frame(self.main)
         option1login = Button(
             self.optionsframe,
             text="Login",
@@ -427,7 +419,7 @@ class user:
             fg="black",
             activebackground="light blue",
         )
-        option1login.pack(padx=10, pady=10)
+        option1login.grid(row=1, column = 0, padx=10, pady=10)
 
         # register new user option
         option2newuser = Button(
@@ -439,7 +431,7 @@ class user:
             fg="black",
             activebackground="light blue",
         )
-        option2newuser.pack(padx=10, pady=10)
+        option2newuser.grid(row=2, column = 0, padx=10, pady=10)
 
         # show all available routes option
         option3routes = Button(
@@ -451,25 +443,247 @@ class user:
             fg="black",
             activebackground="light blue",
         )
-        option3routes.pack(padx=10, pady=10)
+        option3routes.grid(row= 3, column = 0, padx=10, pady=10)
         self.optionsframe.config(bg="black")
-        self.optionsframe.pack()
+        self.optionsframe.grid(row=0, column=0)
 
 
 class travel:
     def __init__(self, main):
         self.main = main
-        # variables
-        self.testreach() #function to test if the program has reached here 
-    
-    def testreach():
-        print("reached")
-        return 
+        self.bookingfunction()
 
+    def bookingfunction(e):
+        newroot = Tk()
+        newroot.geometry("580x400")
+        newroot.title("Booking")
+        newroot.config(bg="black")
+
+        # init
+        mobilevalue = StringVar()
+        Fromvalue = StringVar()
+        Tovalue = StringVar()
+        Farevalue = StringVar()
+        dayvalue = StringVar()
+        timevalue = StringVar()
+        paymentmodevalue = StringVar()
+
+        # clear on click for mobile number 
+        def clearonclick(e):
+            mobileentry.delete(0,"end")
+        # heading
+        Label(
+            newroot,
+            text="Booking Details",
+            font="Lato 15 underline",
+            pady=10,
+            width=45,
+            fg="light blue", 
+            bg="black",
+        ).grid(row=0, column=2, columnspan=3)
+
+        # mobile entry
+        Label(
+            newroot,
+            text="Mobile No.",
+            padx=80,
+            pady=5,
+            font =("Lato", 15),
+            fg="light blue", 
+            bg="black",
+        ).grid(row=1, column=2)
+        mobileentry = Entry(newroot, textvariable=mobilevalue,bg="light blue", fg="black", font=("Lato", 15))
+        mobileentry.insert(0, "Enter your mobile number...")
+        mobileentry.bind("<FocusIn>", clearonclick)
+        mobileentry.grid(row=1, column=3)
+
+        # From entry
+        Label(
+            newroot, 
+            text="FROM", 
+            padx=80, 
+            pady=5,
+            font =("Lato", 15),
+            fg="light blue", 
+            bg="black",
+        ).grid(row=2, column=2)
+        clicked = StringVar()
+        clicked.set("Pickup")
+        drop = OptionMenu(
+            newroot,
+            clicked,
+            "Main Gate ",
+            "Computing Block",
+            "BH-1",
+            "BH-3",
+            "BH-6",
+            "Admission Block",
+            "Unihospital",
+            "UniMall",
+        )
+        drop.config(font=("Lato", 15), fg="light blue", bg="black")
+        drop.grid(row=2, column=3, sticky=E)
+        
+
+        # To entry 
+        Label(
+            newroot, 
+            text="TO", 
+            pady=5,
+            font =("Lato", 15),
+            fg="light blue", 
+            bg="black",
+        ).grid(row=3, column=2)
+        clicked2 = StringVar()
+        clicked2.set("Drop")
+        drop1 = OptionMenu(
+            newroot,
+            clicked2,
+            "Main Gate ",
+            "Computing Block",
+            "BH-1",
+            "BH-3",
+            "BH-6",
+            "Admission Block",
+            "Unihospital",
+            "UniMall",
+        )
+        drop1.config(font=("Lato", 15), fg="light blue", bg="black", activebackground="black", activeforeground="light blue")
+        drop1.grid(row=3, column=3, sticky=E)
+
+        # Fare entry 
+        Label(
+            newroot,
+            text="Fare", 
+            pady=5,
+            font =("Lato", 15),
+            fg="light blue", 
+            bg="black",
+        ).grid(row=4, column=2)
+        Fareentry = Entry(newroot, textvariable=Farevalue, state=DISABLED, fg="light blue", bg="black", font=("Lato", 15), background="light blue", foreground="black")
+        Fareentry.grid(row=4, column=3)
+
+        # calculating fare
+        def calcfare():
+            fromdisplay = Entry(newroot, font=("Lato", 15), bg="light blue", fg="black", width=17)
+            fromdisplay.insert(0, clicked.get())
+            fromdisplay.grid(row=2, column=3,padx=2, sticky=W)
+
+            todisplay = Entry(newroot, font=("Lato", 15), bg="light blue", fg="black", width=17)
+            todisplay.insert(0, clicked2.get())
+            todisplay.grid(row=3, column=3, padx=2, sticky=W)
+
+            modedisplay = Entry(newroot, font=("Lato", 15), bg="light blue", fg="black",width=17)
+            modedisplay.insert(0, clicked3.get())
+            modedisplay.grid(row=7, column=3, padx=2, sticky=W)
+
+            startplace = clicked.get()
+            reachplace = clicked2.get()
+
+
+            if (startplace == "Pickup" or reachplace == "Drop"):
+                Fareentry.config(state=NORMAL)
+                Fareentry.delete(0,"end")
+                Fareentry.insert(0,"0")
+            elif(startplace == reachplace):
+                Fareentry.config(state=NORMAL)
+                Fareentry.delete(0,"end")
+                Fareentry.insert(0,"0")
+            elif(reachplace == "Unihospital"):
+                Fareentry.config(state=NORMAL)
+                Fareentry.delete(0,"end")
+                Fareentry.insert(0,"0")
+            elif(reachplace == "Main Gate"):
+                Fareentry.config(state=NORMAL)
+                Fareentry.delete(0,"end")
+                Fareentry.insert(0,"30")
+            elif(reachplace == "Computing Block" or reachplace == "Admission Block"):
+                Fareentry.config(state=NORMAL)
+                Fareentry.delete(0,"end")
+                Fareentry.insert(0,"20")
+            elif(reachplace == "BH-1" or reachplace == "BH-3" or reachplace == "BH-6"):
+                Fareentry.config(state=NORMAL)
+                Fareentry.delete(0,"end")
+                Fareentry.insert(0,"10")
+            elif(reachplace == "UniMall"):
+                Fareentry.config(state=NORMAL)
+                Fareentry.delete(0,"end")
+                Fareentry.insert(0,"40")
+        # calc fare button 
+        calcbutton = Button(newroot,text="Calc Fare", font=("Lato", 15), bg="light blue", fg="black", command=calcfare)
+        calcbutton.grid(row=8, column=2, pady=8, padx=16, sticky=E)
+
+
+        # Day entry 
+        Label(
+            newroot,
+            text="Day", 
+            pady=5,
+            font =("Lato", 15),
+            fg="light blue", 
+            bg="black",
+        ).grid(row=5, column=2)
+        dayentry = Entry(newroot, textvariable=dayvalue, bg="light blue", fg="black", font=("Lato", 15))
+        dayentry.grid(row=5, column=3)
+
+
+        # Time entry 
+        Label(
+            newroot, 
+            text="Time", 
+            pady=5,
+            font =("Lato", 15),
+            fg="light blue", 
+            bg="black",
+        ).grid(row=6, column=2)
+        timeentry = Entry(newroot, textvariable=timevalue, font=("Lato", 15), fg="black", bg="light blue")
+        timeentry.grid(row=6, column=3)
+
+
+        # payment 
+        Label(
+            newroot, 
+            text="Payment Mode", 
+            pady=5,
+            font =("Lato", 15),
+            fg="light blue", 
+            bg="black",
+        ).grid(row=7, column=2)
+        clicked3 = StringVar()
+        clicked3.set("choose payment option")
+        drop2 = OptionMenu(
+            newroot, 
+            clicked3, 
+            "Cash", 
+            "Onine payment"
+        )
+        drop2.config(font=("Lato", 15), fg="light blue", bg="black", activebackground="black", activeforeground="light blue")
+        drop2.grid(row=7, column=3,sticky=E)
+
+
+        # book button
+        def confirm():
+            msg.showinfo(title="Booking status", message="Booking successful.")
+
+        bookbutton = Button(newroot, command=confirm, text="Confirm Booking", font=("Lato", 15), fg="black", bg="light blue")
+        bookbutton.grid(row=8, column=3,pady=8, sticky=W)
+
+        # cancel button 
+        def cancel():
+            status = msg.askyesno(
+                title="Question", message="Do you want to cancel the booking?"
+            )
+            if status == True:
+                newroot.destroy()
+
+        cancelbutton = Button(newroot, command=cancel, text="Cancel", font=("Lato", 15), fg="black", bg="light blue")
+        cancelbutton.grid(row=8, column=3, pady=8, sticky=E)
+
+        newroot.mainloop()
 
 if __name__ == "__main__":
     root = Tk()
-    root.geometry("600x300")
+    root.geometry("410x300")
     root.title("Cab Booking System Login")
     root.config(bg="black")
 
