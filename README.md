@@ -1,2 +1,3 @@
-# cab-booking-system
-cab booking system in python and mysql for a semester project
+# Academic Project - Cab Booking System
+Developed a Cab Booking System using Python and MySQL integration. 
+Implemented the Tkinter GUI using Python to develop the interface. 
